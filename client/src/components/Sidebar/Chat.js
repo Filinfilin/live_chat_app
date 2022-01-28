@@ -21,7 +21,8 @@ const useStyles = makeStyles((theme) => ({
 
 const Chat = (props) => {
   const classes = useStyles();
-  const { conversation, latestMessageText } = props;
+  const { conversation } = props;
+  const { otherUser } = conversation;
 
   const handleClick = async (conversation) => {
     await props.setActiveChat(conversation.otherUser.username);
@@ -30,12 +31,12 @@ const Chat = (props) => {
   return (
     <Box onClick={() => handleClick(conversation)} className={classes.root}>
       <BadgeAvatar
-        photoUrl={conversation.otherUser.photoUrl}
-        username={conversation.otherUser.username}
-        online={conversation.otherUser.online}
+        photoUrl={otherUser.photoUrl}
+        username={otherUser.username}
+        online={otherUser.online}
         sidebar={true}
       />
-      <ChatContent conversation={conversation} latestMessageText={latestMessageText}/>
+      <ChatContent conversation={conversation} />
     </Box>
   );
 };
