@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
@@ -21,27 +21,38 @@ const useStyles = makeStyles(() => ({
 
 const Sidebar = (props) => {
   const classes = useStyles();
-  const conversations = props.conversations || [];
-  const { handleChange, searchTerm } = props;
+  const { handleChange, searchTerm, conversations } = props;
+
+  const [userConversations, setUserConversations] = useState([])
+
+  useEffect(() => {
+    setUserConversations([...conversations])
+  }, [conversations]);
 
   return (
     <Box className={classes.root}>
       <CurrentUser />
       <Typography className={classes.title}>Chats</Typography>
       <Search handleChange={handleChange} />
-      {conversations
-        .filter((conversation) => conversation.otherUser.username.includes(searchTerm))
+      {userConversations
+        .filter((conversation) =>
+          conversation.otherUser.username.includes(searchTerm)
+        )
         .map((conversation) => {
-          return <Chat conversation={conversation} key={conversation.otherUser.username} />;
+          return (
+            <Chat
+              conversation={conversation}
+              key={conversation.otherUser.username}
+              latestMessageText = {conversation.latestMessageText}
+            />
+          );
         })}
     </Box>
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    conversations: state.conversations
-  };
+const mapStateToProps = (state, ownProps) => {
+  return { ...state, conversations: [...state.conversations] };
 };
 
-export default connect(mapStateToProps)(Sidebar);
+export default connect(mapStateToProps, null)(Sidebar);

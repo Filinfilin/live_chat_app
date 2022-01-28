@@ -52,7 +52,7 @@ const ActiveChat = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  return {
+  return {...state,
     user: state.user,
     conversation:
       state.conversations &&
