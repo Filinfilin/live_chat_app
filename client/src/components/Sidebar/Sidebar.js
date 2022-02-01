@@ -21,8 +21,7 @@ const useStyles = makeStyles(() => ({
 
 const Sidebar = (props) => {
   const classes = useStyles();
-  const conversations = props.conversations || [];
-  const { handleChange, searchTerm } = props;
+  const { handleChange, searchTerm, conversations } = props;
 
   return (
     <Box className={classes.root}>
@@ -30,18 +29,18 @@ const Sidebar = (props) => {
       <Typography className={classes.title}>Chats</Typography>
       <Search handleChange={handleChange} />
       {conversations
-        .filter((conversation) => conversation.otherUser.username.includes(searchTerm))
+        .filter((conversation) =>
+          conversation.otherUser.username.includes(searchTerm)
+        )
         .map((conversation) => {
-          return <Chat conversation={conversation} key={conversation.otherUser.username} />;
+          return <Chat conversation={conversation} key={conversation.otherUser.username} latestMessageText={conversation.latestMessageText}/>;
         })}
     </Box>
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    conversations: state.conversations
-  };
+const mapStateToProps = (state, ownProps) => {
+  return { ...state, conversations: [...state.conversations] };
 };
 
-export default connect(mapStateToProps)(Sidebar);
+export default connect(mapStateToProps, null)(Sidebar);
