@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Box, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
@@ -23,29 +23,17 @@ const Sidebar = (props) => {
   const classes = useStyles();
   const { handleChange, searchTerm, conversations } = props;
 
-  const [userConversations, setUserConversations] = useState([])
-
-  useEffect(() => {
-    setUserConversations([...conversations])
-  }, [conversations]);
-
   return (
     <Box className={classes.root}>
       <CurrentUser />
       <Typography className={classes.title}>Chats</Typography>
       <Search handleChange={handleChange} />
-      {userConversations
+      {conversations
         .filter((conversation) =>
           conversation.otherUser.username.includes(searchTerm)
         )
         .map((conversation) => {
-          return (
-            <Chat
-              conversation={conversation}
-              key={conversation.otherUser.username}
-              latestMessageText = {conversation.latestMessageText}
-            />
-          );
+          return <Chat conversation={conversation} key={conversation.otherUser.username} latestMessageText={conversation.latestMessageText}/>;
         })}
     </Box>
   );
