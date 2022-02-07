@@ -13,31 +13,31 @@ import {
 import { register } from "./store/utils/thunkCreators";
 import LoginRegistrationSideImage from "./components/loginRegistrationSideImage";
 
-const useStyles = makeStyles(() => ({
-  main_container: {
+const useStyles = makeStyles((theme) => ({
+  mainContainer: {
     height: "100vh",
   },
-  button_login: {
+  buttonLogin: {
     height: 54,
     boxShadow: "1px 1px 3px #bdbdbd",
     minWidth: 140,
     marginLeft: 30,
   },
-  form_container: {
+  formContainer: {
     height: "100%",
   },
-  form_container_header: {
+  formContainerHeader: {
     display: "flex",
     margin: "0 45px 0 auto",
     paddingTop: 30,
     alignItems: "first baseline",
   },
-  image_container: {
+  imageContainer: {
     height: "100%",
     overflow: "hidden",
     position: "relative",
   },
-  button_create: {
+  buttonCreate: {
     height: 54,
     display: "flex",
     borderRadius: 3,
@@ -45,19 +45,15 @@ const useStyles = makeStyles(() => ({
     marginTop: 30,
     fontSize: 14,
   },
-  bg_image: {
-    width: "100%",
-    position: "absolute",
-  },
-  bg: {
-    position: "absolute",
-    left: 0,
-    width: "100%",
-  },
   form: {
-    width: "60%",
+    [theme.breakpoints.up('xs')]: {
+      width: "80%",
+    },
+    [theme.breakpoints.up('sm')]: {
+      width: "60%",
+    },
   },
-  form_typography: {
+  formTypography: {
     marginLeft: 8,
   },
 }));
@@ -87,20 +83,21 @@ const Login = (props) => {
     return <Redirect to="/home" />;
   }
   return (
-    <Grid className={classes.main_container} container>
-      <Grid className={classes.image_container} lg={6} md={6} height={100}>
+    <Grid className={classes.mainContainer} container>
+      <Grid className={classes.imageContainer} lg={5} md={5} height={100}>
         <LoginRegistrationSideImage />
       </Grid>
       <Grid
-        className={classes.form_container}
-        lg={6}
-        md={6}
+        item
+        className={classes.formContainer}
+        lg={7}
+        md={7}
         container
         justify="center"
         height={100}
       >
         <Grid
-          className={classes.form_container_header}
+          className={classes.formContainerHeader}
           container
           justify="flex-end"
         >
@@ -108,7 +105,7 @@ const Login = (props) => {
             Already have an account?
           </Typography>
           <Button
-            className={classes.button_login}
+            className={classes.buttonLogin}
             onClick={() => history.push("/login")}
             color="primary"
           >
@@ -117,7 +114,7 @@ const Login = (props) => {
         </Grid>
         <form className={classes.form} onSubmit={handleRegister}>
           <Grid container spacing={2}>
-            <Typography variant="h4" className={classes.form_typography}>
+            <Typography variant="h4" className={classes.formTypography}>
               {" "}
               Create an account.
             </Typography>
@@ -179,7 +176,7 @@ const Login = (props) => {
             </Grid>
             <Grid container md={12} justify="center">
               <Button
-                className={classes.button_create}
+                className={classes.buttonCreate}
                 type="submit"
                 variant="contained"
                 size="large"

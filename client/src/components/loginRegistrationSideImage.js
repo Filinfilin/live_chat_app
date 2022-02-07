@@ -8,7 +8,7 @@ import shape from "../img/Shape.png";
 import oval from "../img/oval.png";
 
 const useStyles = makeStyles(() => ({
-  bg_image: {
+  bgImage: {
     width: "100%",
     position: "absolute",
     minHeight: "100%",
@@ -21,7 +21,7 @@ const useStyles = makeStyles(() => ({
     width: "100%",
     height: "inherit",
   },
-  image_quote: {
+  imageQuote: {
     textAlign: "center",
     position: "absolute",
     display: "flex",
@@ -33,10 +33,10 @@ const useStyles = makeStyles(() => ({
     height: "100%",
     transform: "translate(0%, 32%)",
   },
-  shape_container: {
+  shapeContainer: {
     margin: 30,
   },
-  shape_ovals: {
+  shapeOvals: {
     position: "absolute",
     top: 55,
     left: "44%",
@@ -54,7 +54,7 @@ const LoginRegistrationSideImage = (props) => {
     <>
       <Box
         component="img"
-        className={classes.bg_image}
+        className={classes.bgImage}
         src={bgImg}
         sx={{ display: { sm: "none", md: "flex" } }}
       />
@@ -64,10 +64,10 @@ const LoginRegistrationSideImage = (props) => {
         src={bgImgGrad}
         sx={{ display: { sm: "none", md: "flex" } }}
       />
-      <Box className={classes.image_quote}>
-        <Box className={classes.shape_container}>
+      <Box className={classes.imageQuote}>
+        <Box className={classes.shapeContainer}>
           <Box component="img" src={shape} />
-          <Box className={classes.shape_ovals}>
+          <Box className={classes.shapeOvals}>
             <Box component="img" src={oval} className={classes.oval} />
             <Box component="img" src={oval} className={classes.oval} />
             <Box component="img" src={oval} className={classes.oval} />

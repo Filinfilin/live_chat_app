@@ -12,31 +12,36 @@ import { login } from "./store/utils/thunkCreators";
 import LoginRegistrationSideImage from "./components/loginRegistrationSideImage";
 import { makeStyles } from "@material-ui/core/styles";
 
-const useStyles = makeStyles(() => ({
-  image_container: {
+const useStyles = makeStyles((theme) => ({
+  imageContainer: {
     height: "100%",
     overflow: "hidden",
     position: "relative",
   },
-  login_container: {
+  loginContainer: {
     height: "100vh",
   },
-  button_register: {
+  buttonRegister: {
     height: 54,
     boxShadow: "1px 1px 3px #bdbdbd",
     minWidth: 140,
     marginLeft: 30,
   },
-  form_container_header: {
+  formContainerHeader: {
     display: "flex",
     margin: "0 45px 0 auto",
     paddingTop: 30,
     alignItems: "first baseline",
   },
   form: {
-    width: "60%",
+    [theme.breakpoints.up('xs')]: {
+      width: "80%",
+    },
+    [theme.breakpoints.up('sm')]: {
+      width: "60%",
+    },
   },
-  button_login: {
+  buttonLogin: {
     height: 54,
     display: "flex",
     borderRadius: 3,
@@ -44,7 +49,7 @@ const useStyles = makeStyles(() => ({
     marginTop: 30,
     fontSize: 14,
   },
-  form_typography: {
+  formTypography: {
     marginLeft: 8,
   },
 }));
@@ -67,32 +72,31 @@ const Login = (props) => {
   }
 
   return (
-    <Grid container justify="center" className={classes.login_container}>
-      <Grid className={classes.image_container} md={6} height={100}>
+    <Grid container justify="center" className={classes.loginContainer}>
+      <Grid className={classes.imageContainer} md={5} height={100}>
         <LoginRegistrationSideImage />
       </Grid>
-      <Grid lg={6} md={6} container justify="center" height={100}>
+      <Grid lg={7} md={7} container justify="center" height={100}>
         <Grid
           container
           item
-          className={classes.form_container_header}
+          className={classes.formContainerHeader}
           justify="flex-end"
         >
           <Typography className={classes.typography} color="secondary">
-            Need to register?
+          Don't have an account?
           </Typography>
           <Button
-            className={classes.button_register}
+            className={classes.buttonRegister}
             onClick={() => history.push("/register")}
             color="primary"
           >
-            Register
+            Create account
           </Button>
         </Grid>
         <form className={classes.form} onSubmit={handleLogin}>
           <Grid container spacing={2}>
-            <Typography variant="h4" className={classes.form_typography}>
-              {" "}
+            <Typography variant="h4" className={classes.formTypography}>
               Welcome back!
             </Typography>
             <Grid item xs={12}>
@@ -115,9 +119,9 @@ const Login = (props) => {
                 />
               </FormControl>
             </Grid>
-            <Grid container xs={12} justify="center">
+            <Grid item xs={12} justify="center">
               <Button
-                className={classes.button_login}
+                className={classes.buttonLogin}
                 type="submit"
                 variant="contained"
                 size="large"
