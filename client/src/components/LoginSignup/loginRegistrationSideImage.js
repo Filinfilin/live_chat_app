@@ -1,11 +1,11 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Box } from "@material-ui/core";
-import bgImg from "../img/bgimg.png";
-import bgImgGrad from "../img/bg.png";
-import conv from "../img/conv.png";
-import shape from "../img/Shape.png";
-import oval from "../img/oval.png";
+import bgImg from "../../img/bgimg.png";
+import bgImgGrad from "../../img/bg.png";
+import conv from "../../img/conv.png";
+import shape from "../../img/Shape.png";
+import oval from "../../img/oval.png";
 
 const useStyles = makeStyles(() => ({
   bgImage: {
@@ -19,7 +19,7 @@ const useStyles = makeStyles(() => ({
     position: "absolute",
     left: 0,
     width: "100%",
-    height: "inherit",
+    height: "100%",
   },
   imageQuote: {
     textAlign: "center",
@@ -31,7 +31,7 @@ const useStyles = makeStyles(() => ({
     margin: "auto",
     width: "fit-content",
     height: "100%",
-    transform: "translate(0%, 32%)",
+    transform: "translate(0%, 30%)",
   },
   shapeContainer: {
     margin: 30,
@@ -56,13 +56,13 @@ const LoginRegistrationSideImage = (props) => {
         component="img"
         className={classes.bgImage}
         src={bgImg}
-        sx={{ display: { sm: "none", md: "flex" } }}
+        sx={{ display: { xs: "none", sm: "none", md: "flex" } }}
       />
       <Box
         component="img"
         className={classes.bg}
         src={bgImgGrad}
-        sx={{ display: { sm: "none", md: "flex" } }}
+        sx={{ display: { xs: "none", sm: "none", md: "flex" } }}
       />
       <Box className={classes.imageQuote}>
         <Box className={classes.shapeContainer}>
