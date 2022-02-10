@@ -1,68 +1,96 @@
 import React from "react";
-import { Redirect, useHistory } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import {
   Grid,
-  Box,
   Typography,
   Button,
   FormControl,
   TextField,
 } from "@material-ui/core";
 import { login } from "./store/utils/thunkCreators";
+import { makeStyles } from "@material-ui/core/styles";
+import LoginSignup from "./components/LoginSignup/loginSignup";
+
+const useStyles = makeStyles((theme) => ({
+  form: {
+    [theme.breakpoints.up("xs")]: {
+      width: "80%",
+      margin: "auto"
+    },
+    [theme.breakpoints.up("sm")]: {
+      width: "60%",
+      margin: "auto"
+    },
+  },
+  buttonLogin: {
+    height: 54,
+    display: "flex",
+    borderRadius: 3,
+    minWidth: 160,
+    margin: '30px auto',
+    fontSize: 14,
+  },
+  formTypography: {
+    marginLeft: 8,
+  },
+}));
 
 const Login = (props) => {
-  const history = useHistory();
-  const { user, login } = props;
+  const { login, user } = props;
+  const classes = useStyles();
+  if (user.id) {
+    return <Redirect to="/home" />;
+  }
 
   const handleLogin = async (event) => {
     event.preventDefault();
     const username = event.target.username.value;
     const password = event.target.password.value;
-
     await login({ username, password });
   };
 
-  if (user.id) {
-    return <Redirect to="/home" />;
-  }
-
   return (
-    <Grid container justify="center">
-      <Box>
-        <Grid container item>
-          <Typography>Need to register?</Typography>
-          <Button onClick={() => history.push("/register")}>Register</Button>
-        </Grid>
-        <form onSubmit={handleLogin}>
-          <Grid>
-            <Grid>
-              <FormControl margin="normal" required>
-                <TextField
-                  aria-label="username"
-                  label="Username"
-                  name="username"
-                  type="text"
-                />
-              </FormControl>
-            </Grid>
-            <FormControl margin="normal" required>
+    <LoginSignup type="login">
+      <form className={classes.form} onSubmit={handleLogin}>
+        <Grid container spacing={2}>
+          <Typography variant="h4" className={classes.formTypography}>
+            Welcome back!
+          </Typography>
+          <Grid item xs={12}>
+            <FormControl required fullWidth>
               <TextField
-                label="password"
+                aria-label="username"
+                label="Username"
+                name="username"
+                type="text"
+              />
+            </FormControl>
+          </Grid>
+          <Grid item xs={12}>
+            <FormControl required fullWidth>
+              <TextField
+                label="Password"
                 aria-label="password"
                 type="password"
                 name="password"
               />
             </FormControl>
-            <Grid>
-              <Button type="submit" variant="contained" size="large">
-                Login
-              </Button>
-            </Grid>
           </Grid>
-        </form>
-      </Box>
-    </Grid>
+          <Grid item xs={12}>
+            <Button
+              className={classes.buttonLogin}
+              type="submit"
+              variant="contained"
+              size="large"
+              color="primary"
+            >
+              Login
+            </Button>
+          </Grid>
+        </Grid>
+      </form>
+    </LoginSignup>
   );
 };
 
