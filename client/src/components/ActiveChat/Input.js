@@ -89,37 +89,7 @@ const Input = (props) => {
     uploadImagePreview(newImagesToSend);
   };
 
-  // const ImagesPreview = (convertedImages) => {
-  //   if (convertedImages && convertedImages.length) {
-  //     return convertedImages.map((item, index) => (
-  //       <Grid
-  //         item
-  //         className={classes.imgPreviewContainer}
-  //         key={`preview-image-${index}`}
-  //       >
-  //         <img
-  //           className={classes.imgPreview}
-  //           src={item.data}
-  //           alt="img_preview"
-  //           height={50}
-  //           width={50}
-  //         />
-  //         <IconButton
-  //           className={classes.btnDelete}
-  //           color="primary"
-  //           aria-label="upload picture"
-  //           component="span"
-  //           onClick={() => removeImage(index)}
-  //         >
-  //           <CancelRounded
-  //             color="error"
-  //             className={classes.btnDelete}
-  //           />
-  //         </IconButton>
-  //       </Grid>
-  //     ));
-  //   }
-  // };
+
 
   return (
     <form className={classes.root} onSubmit={handleSubmit}>
