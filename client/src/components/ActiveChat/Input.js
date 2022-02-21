@@ -73,6 +73,7 @@ const Input = (props) => {
     let files = [...images];
     setImagesToSend(files);
     convertImages(files);
+    window.document.getElementById("text_message_input").focus();
   }
 
   async function convertImages(imagesToSend) {
@@ -103,7 +104,9 @@ const Input = (props) => {
         <FilledInput
           endAdornment={
             uploading ? (
-              <CircularProgress />
+              <Box sx={{ display: "flex" }}>
+                <CircularProgress />
+              </Box>
             ) : (
               <Box className="image-upload">
                 <input
@@ -130,6 +133,7 @@ const Input = (props) => {
           classes={{ root: classes.input }}
           disableUnderline
           placeholder="Type something..."
+          id="text_message_input"
           value={text}
           name="text"
           onChange={handleChange}

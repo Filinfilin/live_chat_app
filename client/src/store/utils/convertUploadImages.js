@@ -1,30 +1,32 @@
-export async function uploadImage(file) {
-  let fileUrl = [];
+import axios from "axios";
+const instance = axios.create();
+
+export async function uploadImage(files) {
+  let filesUrl = [];
   const formdata = new FormData();
-  for (const img of file) {
-    try {
-      formdata.append("file", img);
-      formdata.append("upload_preset", "zxbf0wo6");
-      const requestOptions = {
-        method: "POST",
-        body: formdata,
-        redirect: "follow",
-      };
-      const res = await fetch(
-        `https://api.cloudinary.com/v1_1/dxsalxqoo/image/upload`,
-        requestOptions
-      );
-      if (res.status !== 200) {
-        console.log("Looks like there was a problem." + res.status);
-        return;
-      }
-      const response = await res.json();
-      fileUrl.push(response.url);
-    } catch (error) {
-      console.log("Fetch error: ", error);
-    }
+  try {
+    await Promise.all(
+      files.map((img, index) => {
+        return new Promise((resolve, reject) => {
+          formdata.append("file", img);
+          formdata.append("upload_preset", "zxbf0wo6");
+          const res = instance.post(
+            `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUD_NAME}/image/upload`,
+            formdata
+          );
+          resolve(res);
+        })
+          .then((res) => filesUrl.push(res.data.url))
+          .catch((err) => {
+            throw new Error(`Oops, ${err}`);
+          });
+      })
+    );
+  } catch (err) {
+    console.log(err.message);
+  } finally {
+    return filesUrl;
   }
-  return fileUrl;
 }
 
 export function convertToBase64(file) {

@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Box, Typography } from "@material-ui/core";
+import { Avatar, Box, Typography } from "@material-ui/core";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -26,21 +26,38 @@ const useStyles = makeStyles(() => ({
     borderRadius: "10px 10px 0 10px",
   },
   attachment: {
-    height: 150,
-    width: 200,
     borderRadius: 10,
     objectFit: "cover",
     margin: 5,
+  },
+  avatar: {
+    height: 30,
+    width: 30,
+    marginTop: 6,
   },
 }));
 
 const SenderBubble = (props) => {
   const classes = useStyles();
-  const { time, text, attachments } = props;
+  const { time, text, attachments, user, lastMessage } = props;
+
+  const WITH_COUPLE_ATTACHMENTS = attachments && attachments.length > 1;
+  const WITH_ONE_OR_NO_ATTACHMENTS_AND_TEXT =
+    (text && !attachments) || (text && attachments && attachments.length <= 1);
+
+  const Text = ({ text }) => {
+    return (
+      <Box className={classes.bubble}>
+        <Typography className={classes.text}>{text}</Typography>
+      </Box>
+    );
+  };
+
   return (
     <Box className={classes.root}>
       <Typography className={classes.date}>{time}</Typography>
-      <Box className={classes.bubble}>
+      {text && WITH_COUPLE_ATTACHMENTS && <Text text={text} />}
+      <Box className={WITH_COUPLE_ATTACHMENTS ? "" : classes.bubble}>
         {attachments &&
           attachments.map((item, index) => (
             <img
@@ -48,12 +65,19 @@ const SenderBubble = (props) => {
               src={item}
               key={index * Math.random()}
               alt="attachment"
-              height={200}
-              width={250}
+              height={attachments.length === 1 ? 200 : 150}
+              width={attachments.length === 1 ? 250 : 200}
             />
           ))}
-        {text && <Typography className={classes.text}>{text}</Typography>}
+        {WITH_ONE_OR_NO_ATTACHMENTS_AND_TEXT && <Text text={text} />}
       </Box>
+      {lastMessage && (
+        <Avatar
+          alt={user.username}
+          src={user.photoUrl}
+          className={classes.avatar}
+        />
+      )}
     </Box>
   );
 };
