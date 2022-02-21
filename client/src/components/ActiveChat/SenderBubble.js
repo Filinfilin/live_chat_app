@@ -28,7 +28,7 @@ const useStyles = makeStyles(() => ({
   attachment: {
     borderRadius: 10,
     objectFit: "cover",
-    margin: 5,
+    marginRight: 5,
   },
   avatar: {
     height: 30,

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   FormControl,
   FilledInput,
@@ -40,6 +40,7 @@ const Input = (props) => {
   const { postMessage, otherUser, conversationId, user } = props;
   const [imagesToSend, setImagesToSend] = useState([]);
   const [uploading, setUploading] = useState(false);
+  const textInput = useRef();
 
   const handleChange = (event) => {
     setText(event.target.value);
@@ -73,7 +74,7 @@ const Input = (props) => {
     let files = [...images];
     setImagesToSend(files);
     convertImages(files);
-    window.document.getElementById("text_message_input").focus();
+    textInput.current.focus();
   }
 
   async function convertImages(imagesToSend) {
@@ -133,7 +134,7 @@ const Input = (props) => {
           classes={{ root: classes.input }}
           disableUnderline
           placeholder="Type something..."
-          id="text_message_input"
+          inputRef={textInput}
           value={text}
           name="text"
           onChange={handleChange}
